@@ -394,6 +394,7 @@ include('lib/templates/footer.php');
       let precio1 = precio.substring(2,precioSize);
       $('#codigodet').val(codigo);
       $('#precioVentaC').val(precio1);
+     
       
       obtener_detalleProducto(codigo, descripcion, precio1, codigo, <?php echo $rol; ?>, <?php echo $idventaProducto; ?>, '<?php echo $pass; ?>', 'identificador');
 

@@ -982,8 +982,10 @@ async function obtener_detalleProductoCotizar(Codigo, descripcion, precio, codig
 
 	document.getElementById("img-flip").innerHTML = "";
 	let imagen = 0;
+	let cantidad = 0;
 	for (item of json) {
 		imagen = item.url_imagen;
+		cantidad = cantidad + item.cantidad;
 	}
 
 	if (imagen === '0' || imagen === "") {
@@ -1053,7 +1055,7 @@ async function obtener_detalleProductoCotizar(Codigo, descripcion, precio, codig
          
             	<span class="">EXISTENCIA TOTAL</span>
          
-                <span class="">${json[0].existencia}</span>
+                <span class="">${cantidad}</span>
        
         </div>
 		<div class="line"></div>
@@ -1143,10 +1145,11 @@ async function obtener_detalleProducto(Codigo, descripcion, precio, codigo_id_pr
 
 	document.getElementById("img-flip").innerHTML = "";
 	let imagen = 0;
+	let cantidad = 0;
 	for (item of json) {
 		imagen = item.url_imagen;
+		cantidad = cantidad + item.cantidad;
 	}
-
 	if (imagen === '0' || imagen === "") {
 
 		document.getElementById("img-flip").innerHTML += `
@@ -1201,7 +1204,7 @@ async function obtener_detalleProducto(Codigo, descripcion, precio, codigo_id_pr
 	document.getElementById("card-content-1").innerHTML += `
 				<div class="card-global">
             		<span class="">EXISTENCIA TOTAL</span>
-                	<span class="">${parseInt(json[0].existencia)}</span>
+                	<span class="">${parseInt(cantidad)}</span>
         		</div>
 
 	`;
@@ -1347,8 +1350,10 @@ async function obtener_detalleProductoEnvio(Codigo, descripcion, precio, codigo_
 
 	document.getElementById("img-flip").innerHTML = "";
 	let imagen = 0;
+	let cantidad = 0;
 	for (item of json) {
 		imagen = item.url_imagen;
+		cantidad = cantidad + item.cantidad;
 	}
 
 	if (imagen === '0' || imagen === "") {
@@ -1411,7 +1416,7 @@ async function obtener_detalleProductoEnvio(Codigo, descripcion, precio, codigo_
            
             	<span class="">EXISTENCIA TOTAL</span>
           
-                <span class="">${json[0].existencia}</span>
+                <span class="">${cantidad}</span>
         
         </div>
 

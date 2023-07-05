@@ -923,10 +923,13 @@ function actualizarUsuario(nom, cod) {
 }
 //agrega el id al modal rebajar producto
 function iddetalle(codigo, cantidad, idventaproducto) {
+	
 
-	$('#iddetalleP').val(codigo);
-	$('#cantidadPr').val(cantidad);
-	$('#idventaProducto').val(idventaproducto);
+	document.getElementById('iddetalleP').value = codigo
+	document.getElementById('cantidadPr').value = cantidad
+	document.getElementById('idventaProducto').value = idventaproducto
+	
+
 }
 
 function precioCompra(codigo2, precio) {
@@ -982,8 +985,10 @@ async function obtener_detalleProductoCotizar(Codigo, descripcion, precio, codig
 
 	document.getElementById("img-flip").innerHTML = "";
 	let imagen = 0;
+	let cantidad = 0;
 	for (item of json) {
 		imagen = item.url_imagen;
+		cantidad = cantidad + item.cantidad;
 	}
 
 	if (imagen === '0' || imagen === "") {
@@ -1053,7 +1058,7 @@ async function obtener_detalleProductoCotizar(Codigo, descripcion, precio, codig
          
             	<span class="">EXISTENCIA TOTAL</span>
          
-                <span class="">${json[0].existencia}</span>
+                <span class="">${cantidad}</span>
        
         </div>
 		<div class="line"></div>
@@ -1104,7 +1109,6 @@ async function obtener_detalleProductoCotizar(Codigo, descripcion, precio, codig
 	}
 
 
-
 }
 
 async function obtener_detalleProducto(Codigo, descripcion, precio, codigo_id_producto, rol, idventaProducto, pass, identificador) {
@@ -1112,6 +1116,7 @@ async function obtener_detalleProducto(Codigo, descripcion, precio, codigo_id_pr
 	document.getElementById("iddetalleC").value = codigo_id_producto
 	document.getElementById("idproductoC").value = Codigo
 	document.getElementById("vender").value = ""
+	
 	var codigo = Codigo;
 	var arg_user = pass;
 	var nombre = descripcion;
@@ -1143,8 +1148,10 @@ async function obtener_detalleProducto(Codigo, descripcion, precio, codigo_id_pr
 
 	document.getElementById("img-flip").innerHTML = "";
 	let imagen = 0;
+	let cantidad = 0;
 	for (item of json) {
 		imagen = item.url_imagen;
+		cantidad = cantidad + item.cantidad;
 	}
 
 	if (imagen === '0' || imagen === "") {
@@ -1201,13 +1208,14 @@ async function obtener_detalleProducto(Codigo, descripcion, precio, codigo_id_pr
 	document.getElementById("card-content-1").innerHTML += `
 				<div class="card-global">
             		<span class="">EXISTENCIA TOTAL</span>
-                	<span class="">${parseInt(json[0].existencia)}</span>
+                	<span class="">${parseInt(cantidad)}</span>
         		</div>
 
 	`;
 	document.getElementById("card-content-2").innerHTML = "";
 
 	for (let item of json) {
+		document.getElementById('iddetalleP').value = ''
 
 		if (arg_rol == '2' && typeof json !== 'undefined') {
 			document.getElementById("card-content-2").innerHTML += `
@@ -1347,8 +1355,10 @@ async function obtener_detalleProductoEnvio(Codigo, descripcion, precio, codigo_
 
 	document.getElementById("img-flip").innerHTML = "";
 	let imagen = 0;
+	let cantidad = 0;
 	for (item of json) {
 		imagen = item.url_imagen;
+		cantidad = cantidad + item.cantidad;
 	}
 
 	if (imagen === '0' || imagen === "") {
@@ -1411,7 +1421,7 @@ async function obtener_detalleProductoEnvio(Codigo, descripcion, precio, codigo_
            
             	<span class="">EXISTENCIA TOTAL</span>
           
-                <span class="">${json[0].existencia}</span>
+                <span class="">${cantidad}</span>
         
         </div>
 

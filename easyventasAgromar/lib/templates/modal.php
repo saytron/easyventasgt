@@ -351,8 +351,8 @@
       <div class="modal-body card-vender" style="background-color: #f2f1f1 ;">
         <form method="post" id="formVender">
           <input type="hidden" name="" id="idventa" value="">
-          <input type="hidden" name="" id="idventaProductos" value="<?php echo $idventaProducto; ?>">
-          <input type="hidden" name="" id="iddetalleP" value="">
+          <input type="text" name="" id="idventaProductos" value="<?php echo $idventaProducto; ?>">
+          <input type="text" name="" id="iddetalleP" value="">
           <input type="hidden" name="" id="cantidadPr" value="">
           <input type="hidden" name="" id="usuarioventa" value="<?php echo $pass; ?>">
           <div class="md-form">

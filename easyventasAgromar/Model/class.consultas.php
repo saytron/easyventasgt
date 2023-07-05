@@ -4,6 +4,7 @@
 		public function insertarMarca($arg_descripcionMarca){
 			$modelo = new Conexion();
 
+		
 			$conexion = $modelo->get_connection();
 			$sql = "insert into marca (descripcion) values(:descripcion)";
 			$statement = $conexion->prepare($sql);

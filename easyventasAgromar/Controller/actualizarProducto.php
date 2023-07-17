@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL ^ E_NOTICE);
+/*error_reporting(E_ALL ^ E_NOTICE);
 require_once('../Model/class.conexion.php');
 require_once('../Model/class.consultas.php');
 
@@ -61,3 +61,4 @@ if ($rol == 2) {
 
 echo $mensaje;
 return true;
+*/

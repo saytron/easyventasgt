@@ -63,42 +63,47 @@ $descuento 		= $Datos->descuento;
 	}
 
 	$mensaje = null;
-	if (strlen($venta) >0 && strlen($idventa) >0 && strlen($iddetalle) > 0 && strlen($usuario) >0) {
+	if (strlen($venta) > 0 && strlen($idventa) >0 && strlen($iddetalle) > 0 && strlen($usuario) >0) {
 		
+		if ($venta >0){
 			for ($i=0; $i<strlen($precio); $i++){
-      			if (strpos($validar_numeros, substr($precio,$i,1))===false){
-         			echo "Caracteres no validos para el campo precio";
-         			return false;
-      			}
-  			}
-  			for ($i=0; $i<strlen($venta); $i++){
-      			if (strpos($validar_numeros, substr($venta,$i,1))===false){
-         			echo "Caracteres no validos para el campo cantidad";
-         			return false;
-      			}
-  			}
-  			if($facturaValidada == 1 || $facturaValidada == 2){
-				$mensaje = "3"; //debes generar una venta
-			  }
-   			else if($facturaValidada == 0 ){
-			   
-				if($existencia < $venta || $existencia == 0){
-					$mensaje = "2"; //no tienes producto para vender
-				}else{
-					$consultas->rebajarProducto($venta,$idventa);
-					$consultas->rebajarDetalle($venta,$iddetalle);
-					$mensaje = $consultas->guardarDetalleVenta($fecha,$venta,$totVenta,$iddetalle,$usuario,$idventa,$idventaProduto,$descripcion,$type);	
-				
+				if (strpos($validar_numeros, substr($precio,$i,1))===false){
+				   echo "Caracteres no validos para el campo precio";
+				   return false;
 				}
-			}else{
-				$mensaje = "5"; // "hubo un error al ingresar la venta";
-			   }
-	
+			}
+			for ($i=0; $i<strlen($venta); $i++){
+				if (strpos($validar_numeros, substr($venta,$i,1))===false){
+				   echo "Caracteres no validos para el campo cantidad";
+				   return false;
+				}
+			}
+			if($facturaValidada == 1 || $facturaValidada == 2){
+			  $mensaje = "3"; //debes generar una venta
+			}
+			 else if($facturaValidada == 0 ){
+			 
+			  if($existencia < $venta || $existencia == 0){
+				  $mensaje = "2"; //no tienes producto para vender
+			  }else{
+				  //$consultas->rebajarProducto($venta,$idventa);
+				  $consultas->rebajarDetalle($venta,$iddetalle);
+				  $mensaje = $consultas->guardarDetalleVenta($fecha,$venta,$totVenta,$iddetalle,$usuario,$idventa,$idventaProduto,$descripcion,$type);	
+			  
+			  }
+		  }else{
+			  $mensaje = "5"; // "hubo un error al ingresar la venta";
+			 }
+  
+		}else{
+			$mensaje = "4";//debes colocar una cantidad a vender
+		}
+		
 			
 	}else{
 		
-
-		$mensaje = "4";//debes colocar una cantidad a vender
+		$mensaje = "6";//debes colocar una cantidad a vender
+		
 
 	}
 

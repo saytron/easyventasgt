@@ -250,92 +250,58 @@
 
       <div class="modal-body">
         <form method="post" id="formActualizarDetalle">
-          <input type="hidden" id="codigoProductoDetalle">
-          <input type="hidden" name="" id="posicionAcDet" value="<?php echo $num; ?>">
-          <input class="form-control input-sm" type="hidden" id="codigoAcDet" value="" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
-          <input type="hidden" id="oldBodega" class="form-control" value="">
+          <span class="text-dark">CODIGO:</span>
+          <input class="form-control" type="text" id="codigopr" name="codigopr" placeholder="Codigo" style="text-transform:uppercase;" readonly>
+          <div class="md-form">
+            <i class="fas fa-pencil-alt prefix"></i>
+            <textarea id="descripcionpr" name="descripcionpr" class="md-textarea form-control" rows="3" style="text-transform:uppercase;"></textarea>
+          </div>
+          <span class="text-dark">CANTIDAD TOTAL :</span> <input class="form-control" type="text" id="cantidadpr" name="cantidadpr" placeholder="cantidad" readonly>
+          <span class="text-dark">PRECIO VENTA:</span><input class="form-control" type="text" id="preciopr" name="preciopr" placeholder="precio">
+
+
+          <div class="mb-1">
+            <input type="hidden" id="imagenProductoE" name="imagenProductoE" class="form-control" size="512" placeholder="Imagen">
+
+          </div>
+          <div class="mb-1">
+            <span class="form-control">Cambiar Imagen</span>
+            <input type="file" id="imagenProductoEdit" name="imagenProductoEdit" class="form-control" size="512" placeholder="Imagen">
+
+          </div>
+          <!-- actualizamos el detalle del producto -->
+          <input type="hidden" id="codigoProductoDetalle" name="codigoProductoDetalle">
+          <input type="hidden" name="posicionAcDet" id="posicionAcDet" value="<?php echo $num; ?>">
+          <input class="form-control input-sm" type="hidden" id="codigoAcDet" name="codigoAcDet" value="" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+          <input type="hidden" id="oldBodega" name="oldBodega" class="form-control" value="">
           <div class="mb-3 input-group">
             <input type="text" id="proveedorInsert2" name="proveedorInsert2" class="form-control" placeholder="Proveedor..." aria-label="Recipient's username" aria-describedby="basic-addon2" style="text-transform:uppercase;">
-            <span class="input-group-text"><img width="20px" src="" id="chekProveedor2" alt=""></span>
+            <span class="input-group-text"><img width="20px" src="" id="chekProveedor2" name="checkProveedor2" alt=""></span>
             <input id="proveedorId" name="proveedorId" type="hidden">
           </div>
 
           <div class="mb-3 input-group">
             <input type="text" id="bodegaInsert2" name="bodegaInsert2" class="form-control" placeholder="Bodega..." aria-label="Recipient's username" aria-describedby="basic-addon2" style="text-transform:uppercase;">
-            <span class="input-group-text"><img width="20px" src="" id="chekBodega2" alt=""></span>
+            <span class="input-group-text"><img width="20px" src="" id="chekBodega2" name="chekBodega2" alt=""></span>
             <input id="bodegaId" name="bodegaId" type="hidden">
           </div>
 
           <span class="text-dark">Cantidad</span>
-          <input class="form-control input-sm" type="text" id="cantidadAcDet" placeholder="Cantidad" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+          <input class="form-control input-sm" type="text" id="cantidadAcDet" name="cantidadAcDet" placeholder="Cantidad" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
 
           <span class="text-dark">Precio de compra</span>
-          <input class="form-control input-sm" type="text" id="precioAcDet" placeholder="Precio de Compra" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
-          <input class="form-control input-sm" type="hidden" id="usuarioAcDet" value="<?php echo $pass; ?>" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+          <input class="form-control input-sm" type="text" id="precioAcDet" name="precioAcDet" placeholder="Precio de Compra" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+          <input class="form-control input-sm" type="hidden" id="usuarioAcDet" name="usuarioAcDet" value="<?php echo $pass; ?>" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
 
 
       </div>
       <div class="modal-footer bg-info">
-        <button type="button" id="cerrar2" class="cerrar btn btn-danger" onclick="actualizar_detalleProducto();" data-bs-dismiss="modal">ACTUALIZAR</button>
+        <button type="button" id="cerrar2" class="cerrar btn btn-danger" onclick="return actualizar_detalleProducto(this.form);" data-bs-dismiss="modal">ACTUALIZAR</button>
       </div>
       </form>
     </div>
   </div>
 </div>
-
-<!-- modal para actualizar producto -->
-
-<!-- Modal -->
-<div class="modal fade" id="modalActualizarProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-success text-light">
-        <h5 class="modal-title" id="exampleModalLabel">ACTUALIZAR PRODUCTO</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <?php if ($rol == 2) { ?>
-        <div class="modal-body">
-
-          <form method="post" id="formActualizarProducto" enctype="multipart/form-data" class="needs-validation" novalidate>
-
-            <span class="text-dark">CODIGO:</span><input class="form-control" type="text" id="codigopr" name="codigopr" placeholder="Codigo" style="text-transform:uppercase;" readonly>
-            <div class="md-form">
-              <i class="fas fa-pencil-alt prefix"></i>
-              <textarea id="descripcionpr" name="descripcionpr" class="md-textarea form-control" rows="3" style="text-transform:uppercase;"></textarea>
-            </div>
-            <span class="text-dark">CANTIDAD:</span> <input class="form-control" type="text" id="cantidadpr" name="cantidadpr" placeholder="cantidad" readonly>
-            <span class="text-dark">PRECIO:</span><input class="form-control" type="text" id="preciopr" name="preciopr" placeholder="precio">
-
-
-            <div class="mb-1">
-              <input type="hidden" id="imagenProductoE" name="imagenProductoE" class="form-control" size="512" placeholder="Imagen">
-
-            </div>
-            <div class="mb-1">
-              <span class="form-control">Cambiar Imagen</span>
-              <input type="file" id="imagenProductoEdit" name="imagenProductoEdit" class="form-control" size="512" placeholder="Imagen">
-
-            </div>
-        </div>
-        <div class="modal-footer bg-info">
-          <button type="button" class="cerrar btn btn-danger" onclick="return actualizar_productoE(this.form);" data-bs-dismiss="modal">Actualizar</button>
-        </div>
-        </form>
-      <?php } else {
-      ?>
-        <p class="text-dagner">
-          <center>
-            <h3>No tienes privilegios para modificar</h3>
-          </center>
-        </p>
-      <?php
-      } ?>
-    </div>
-  </div>
-</div>
-
 
 <!--Modal para vender producto -->
 <!-- Modal -->
@@ -553,7 +519,7 @@
 
           <input type="hidden" name="" id="idVentaC" value="">
           <span class="text-dark"></span><input class="form-control" type="hidden" id="passVentaDetalleE" name="" placeholder="Codigo" style="text-transform:uppercase;" readonly>
-        <span class="text-dark"></span><input class="form-control" type="hidden" id="iddetalleventaE" name="" placeholder="Codigo" style="text-transform:uppercase;" readonly>
+          <span class="text-dark"></span><input class="form-control" type="hidden" id="iddetalleventaE" name="" placeholder="Codigo" style="text-transform:uppercase;" readonly>
 
           <LABEL class="btn-danger">REALMENTE QUIERES ELIMINAR ESTA VENTA?</LABEL>
 
@@ -586,11 +552,11 @@
       </div>
       <div class="modal-body">
         <form method="post" id="formActualizarProducto" enctype="multipart/form-data" class="needs-validation" novalidate>
-        <span class="text-dark"></span><input class="form-control" type="hidden" id="idVentaDetalle" name="" placeholder="Codigo" style="text-transform:uppercase;" readonly>
-        <span class="text-dark"></span><input class="form-control" type="hidden" id="iddetalleVentaDetalle" name="" placeholder="Codigo" style="text-transform:uppercase;" readonly>
-        <span class="text-dark"></span><input class="form-control" type="hidden" id="passVentaDetalle" name="" placeholder="Codigo" style="text-transform:uppercase;" readonly>
-        <span class="text-dark"></span><input class="form-control" type="hidden" id="iddetalleventa" name="" placeholder="Codigo" style="text-transform:uppercase;" readonly>
-        <span class="text-dark"></span><input class="form-control" type="hidden" id="cantidadProducto2" name="" placeholder="Codigo" style="text-transform:uppercase;" readonly>
+          <span class="text-dark"></span><input class="form-control" type="hidden" id="idVentaDetalle" name="" placeholder="Codigo" style="text-transform:uppercase;" readonly>
+          <span class="text-dark"></span><input class="form-control" type="hidden" id="iddetalleVentaDetalle" name="" placeholder="Codigo" style="text-transform:uppercase;" readonly>
+          <span class="text-dark"></span><input class="form-control" type="hidden" id="passVentaDetalle" name="" placeholder="Codigo" style="text-transform:uppercase;" readonly>
+          <span class="text-dark"></span><input class="form-control" type="hidden" id="iddetalleventa" name="" placeholder="Codigo" style="text-transform:uppercase;" readonly>
+          <span class="text-dark"></span><input class="form-control" type="hidden" id="cantidadProducto2" name="" placeholder="Codigo" style="text-transform:uppercase;" readonly>
 
           <span class="text-dark">CODIGO:</span><input class="form-control" type="text" id="codigoDetalle" name="codigoDetalle" placeholder="Codigo" style="text-transform:uppercase;" readonly>
           <div class="md-form">

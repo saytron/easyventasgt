@@ -22,7 +22,7 @@ class Producto
         $rows = null;
 			$modelo = new Conexion();
 			$conexion = $modelo->get_connection();
-			$sql = "select d.iddetalle_repuesto as iddetalle, d.fecha, d.cantidad, r.cantidad as existencia, r.url_imagen, d.precio_compra, d.ubicacion_id_ubicacion as idubicacion, u.descripcion as ubicacion, p.nombre as proveedor, p.nit as idProveedor, r.codigo, m.descripcion as marca FROM repuesto r, marca m, detalle_repuesto d, ubicacion u, proveedor p WHERE d.ubicacion_id_ubicacion = u.id_ubicacion and d.proveedor_nit = p.nit and r.codigo = d.repuesto_codigo and m.id_marca = r.marca_id_marca and r.codigo = '$busqueda'";
+			$sql = "select d.iddetalle_repuesto as iddetalle,d.pedir, d.fecha, d.cantidad, r.cantidad as existencia, r.url_imagen, d.precio_compra, d.ubicacion_id_ubicacion as idubicacion, u.descripcion as ubicacion, p.nombre as proveedor, p.nit as idProveedor, r.codigo, m.descripcion as marca FROM repuesto r, marca m, detalle_repuesto d, ubicacion u, proveedor p WHERE d.ubicacion_id_ubicacion = u.id_ubicacion and d.proveedor_nit = p.nit and r.codigo = d.repuesto_codigo and m.id_marca = r.marca_id_marca and r.codigo = '$busqueda'";
 			$statement = $conexion->prepare($sql);
 			$statement->execute();
 			while($result = $statement->fetch()){

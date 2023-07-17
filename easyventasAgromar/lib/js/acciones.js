@@ -22,10 +22,11 @@ function mayus(e) {
 
 	alert(tecla2);
 }
-//evento para actualizar producto
-function actualizar_productoE(formulario) {
 
+function actualizar_detalleProducto(formulario) {
 
+	var arg_proveedor = document.getElementById("proveedorId").value
+	
 	//validar tamanio de la imagen
 	var verificador = document.getElementById("imagenProductoEdit").value
 	if (verificador.length > 0) {
@@ -41,16 +42,19 @@ function actualizar_productoE(formulario) {
 		}
 	}
 
-	var datos = new FormData($("#formActualizarProducto")[0])
-	var url = "Controller/actualizarProducto.php";
-	$.ajax({
+	var datos = new FormData($("#formActualizarDetalle")[0])
+	$('#proveedorId2').val(arg_proveedor);
+	var url = "Controller/actualizarDetalleRepuesto.php";
 
+
+	$.ajax({
 		type: "post",
 		url: url,
 		data: datos,
 		contentType: false,
 		processData: false,
 		success: function (datos) {
+
 
 			if (datos === "1") {
 				$('#modalDetalleProducto').modal('hide');
@@ -89,6 +93,7 @@ function actualizar_productoE(formulario) {
 		}
 	});
 }
+
 //evento para actualizar producto
 function actualizar_productoInventario(formulario) {
 
@@ -388,76 +393,6 @@ function ActualizarDetalleProducto(codigo, bodega, idProveedor, cantidad, precio
 
 
 
-}
-
-function actualizar_detalleProducto() {
-	var arg_codigoProducto = document.getElementById("codigoProductoDetalle").value
-	var arg_idrepuesto = document.getElementById("codigoAcDet").value
-	var arg_oldBodega = document.getElementById("oldBodega").value
-	var arg_proveedor = document.getElementById("proveedorId").value
-	var arg_ubicacion = document.getElementById("bodegaId").value
-	var arg_cantidad = document.getElementById("cantidadAcDet").value
-	var arg_usuario = document.getElementById("usuarioAcDet").value
-	var arg_precio_compra = document.getElementById("precioAcDet").value
-	var arg_posision = document.getElementById("posicionAcDet").value
-
-	document.getElementById("formActualizarDetalle").reset();
-	$('#proveedorId2').val(arg_proveedor);
-	var url = "Controller/actualizarDetalleRepuesto.php";
-
-
-	$.ajax({
-		type: "post",
-		url: url,
-		data: {
-			cantidad: arg_cantidad,
-			oldBodega: arg_oldBodega,
-			proveedor: arg_proveedor,
-			ubicacion: arg_ubicacion,
-			idrepuesto: arg_idrepuesto,
-			usuario: arg_usuario,
-			precio: arg_precio_compra,
-			codigoPr: arg_codigoProducto
-		},
-		success: function (datos) {
-
-			if (datos === "1") {
-				$('#modalDetalleProducto').modal('hide');
-				Swal.fire({
-					position: 'button-end',
-					icon: 'success',
-					title: 'datos actualizados correctamente',
-					showConfirmButton: false,
-					timer: 2500
-				})
-			} else if (datos === "2") {
-				Swal.fire({
-					position: 'button-end',
-					icon: 'error',
-					title: 'Debes llenar los campos',
-					showConfirmButton: false,
-					timer: 2500
-				})
-			} else if (datos === "3") {
-				Swal.fire({
-					position: 'button-end',
-					icon: 'error',
-					title: 'No tienes suficientes privilegios para realizar esta tarea',
-					showConfirmButton: false,
-					timer: 2500
-				})
-			} else {
-				Swal.fire({
-					position: 'button-end',
-					icon: 'error',
-					title: datos,
-					showConfirmButton: false,
-					timer: 2500
-				})
-			}
-
-		}
-	});
 }
 
 function actualizar_detalleProductoInventario() {
@@ -1199,7 +1134,7 @@ async function obtener_detalleProducto(Codigo, descripcion, precio, codigo_id_pr
                 		<span class="">Q ${json[0].precio_compra}</span>
         			</div>
 					<div class="card-global">
-            			<span class="">FECHA</span>
+            			<span class="">FECHA INGRESO</span>
                 		<span class="">${json[0].fecha}</span>
         			</div>
 
@@ -1209,6 +1144,13 @@ async function obtener_detalleProducto(Codigo, descripcion, precio, codigo_id_pr
 				<div class="card-global">
             		<span class="">EXISTENCIA TOTAL</span>
                 	<span class="">${parseInt(cantidad)}</span>
+        		</div>
+
+	`;
+	document.getElementById("card-content-1").innerHTML += `
+				<div class="card-global">
+            		<span class="">PEDIR</span>
+                	<span class="">${json[0].pedir}</span>
         		</div>
 
 	`;
@@ -1260,17 +1202,11 @@ async function obtener_detalleProducto(Codigo, descripcion, precio, codigo_id_pr
 
 			} else {
 				document.getElementById("card-content-2").innerHTML += `		
-		   <div class="btns-group">
-			   <button class="btns btn-color-blue" onclick="iddetalle('${item.iddetalle}','${item.cantidad}','${arg_idventaproducto}')" data-bs-toggle="modal"  data-bs-target="#modalVenderProducto" data-bs-dismiss="modal" alt="Vender" title="Vender"><i class="material-icons">add_shopping_cart</i></button>
-		 
-				 
-				  <button  class="btns btn-color-red" onclick="precioCompra('${item.iddetalle}','${item.precio_compra}')" data-bs-toggle="modal" data-bs-target="#modalCompraProducto" data-bs-dismiss="modal" alt="Comprar" title="Comprar"><i class="larch material-icons">add</i></button>
-		
-				  <button class="btns btn-color-green" onclick="ActualizarDetalleProducto('${item.iddetalle}','${item.idubicacion}','${item.idProveedor}','${item.cantidad}','${item.precio_compra}','${arg_user}','${item.proveedor}','${item.ubicacion}','${item.codigo}')" data-bs-toggle="modal" data-bs-target="#modalActualizarDetalle" data-bs-dismiss="modal" alt="Modificar" title="Modificar"><i class="medium material-icons">border_color</i></button>
-			 
-			  
-		  
-				  <button  class="btns btn-color-yellow" onclick="pedir_producto('${item.iddetalle}')" data-bs-toggle="modal" data-bs-target="#modalPedirProducto" data-bs-dismiss="modal" alt="Pedir" title="Pedir"><i class="material-icons">shopping_basket</i></button>
+		   	<div class="btns-group">
+				<button class="btns btn-color-blue" onclick="iddetalle('${item.iddetalle}','${item.cantidad}','${arg_idventaproducto}')" data-bs-toggle="modal"  data-bs-target="#modalVenderProducto" data-bs-dismiss="modal" alt="Vender" title="Vender"><i class="material-icons">add_shopping_cart</i></button>
+				<button  class="btns btn-color-red" onclick="precioCompra('${item.iddetalle}','${item.precio_compra}')" data-bs-toggle="modal" data-bs-target="#modalCompraProducto" data-bs-dismiss="modal" alt="Comprar" title="Comprar"><i class="larch material-icons">add</i></button>
+				<button class="btns btn-color-green" onclick="ActualizarDetalleProducto('${item.iddetalle}','${item.idubicacion}','${item.idProveedor}','${item.cantidad}','${item.precio_compra}','${arg_user}','${item.proveedor}','${item.ubicacion}','${item.codigo}')" data-bs-toggle="modal" data-bs-target="#modalActualizarDetalle" data-bs-dismiss="modal" alt="Modificar" title="Modificar"><i class="medium material-icons">border_color</i></button>
+			 	<button  class="btns btn-color-yellow" onclick="pedir_producto('${item.iddetalle}')" data-bs-toggle="modal" data-bs-target="#modalPedirProducto" data-bs-dismiss="modal" alt="Pedir" title="Pedir"><i class="material-icons">shopping_basket</i></button>
 
 			</div>
 			`;

@@ -317,7 +317,6 @@ include('lib/templates/footer.php');
         "defaultContent": `
           <div class="btns-group">
             <button class="btnDetalles btns btn-color-blue" data-bs-toggle="modal" data-bs-target="#modalDetalleProducto" alt="detalles" title="ver detalles" ><span class="material-symbols-outlined">read_more</span></button>
-            <button class="btnActualizar btns btn-color-green" data-bs-toggle="modal" data-bs-target="#modalActualizarProducto" alt="detalles" alt="actualizar" title="Actualizar producto"><span class="material-symbols-outlined">edit</span></button>
           </div>
           `
       }],
@@ -366,23 +365,6 @@ include('lib/templates/footer.php');
             */
 
     });
-    $('#tabla tbody').on('click', '.btnActualizar', function() {
-      fila = $(this).closest("tr");
-      var codigo = fila.find('td:eq(0)').text(); //capturamos el ID		            
-      var descripcion = fila.find('td:eq(1)').text();
-      var cantidad = fila.find('td:eq(2)').text();
-      var precio = fila.find('td:eq(3)').text();
-      let precioSize = precio.length;
-      //Le quitamos el caracter Q al precio
-      let precio1 = precio.substring(2,precioSize);
-      $('#codigopr').val(codigo);
-      $('#descripcionpr').val(descripcion);
-      $('#cantidadpr').val(cantidad);
-      $('#preciopr').val(precio1);
-      verImagen(codigo);
-      $('#imagenProductoEdit').val("");
-
-    });
 
     $('#tabla tbody').on('click', '.btnDetalles', function() {
       fila = $(this).closest("tr");
@@ -395,6 +377,14 @@ include('lib/templates/footer.php');
       $('#codigodet').val(codigo);
       $('#precioVentaC').val(precio1);
      
+      fila = $(this).closest("tr");
+     
+      $('#codigopr').val(codigo);
+      $('#descripcionpr').val(descripcion);
+      $('#cantidadpr').val(cantidad);
+      $('#preciopr').val(precio1);
+      verImagen(codigo);
+      $('#imagenProductoEdit').val("");
       
       obtener_detalleProducto(codigo, descripcion, precio1, codigo, <?php echo $rol; ?>, <?php echo $idventaProducto; ?>, '<?php echo $pass; ?>', 'identificador');
 
@@ -613,7 +603,7 @@ include('lib/templates/footer.php');
       Swal.fire({
         position: 'button-end',
         icon: 'error',
-        title: 'Debes colocar una cantidad a vender',
+        title: 'la cantidad debe ser mayor a 0',
         showConfirmButton: false,
         timer: 2500
       })
@@ -622,6 +612,14 @@ include('lib/templates/footer.php');
         position: 'button-end',
         icon: 'error',
         title: 'Hubo un error al ingresar la venta',
+        showConfirmButton: false,
+        timer: 2500
+      })
+    }else if (respuesta === "6") {
+      Swal.fire({
+        position: 'button-end',
+        icon: 'error',
+        title: 'los campos no pueden estar vacios',
         showConfirmButton: false,
         timer: 2500
       })
